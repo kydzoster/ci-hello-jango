@@ -65,3 +65,18 @@
         class Item(models.Model):
             name = models.CharField(max_length=50, null=False, blank=False)
             done = models.BooleanField(null=False, blank=False, default=False)
+
+            def __str__(self):
+                return self.name
+
+24. **python3 manage.py makemigrations --dry-run** *- this will show what we are about to migrate, to migrate for real remove **--dry-run***
+25. **python3 manage.py showmigrations** *-will show where*
+26. **python3 manage.py migrate**
+27. *inside todo/admin.py add:*
+
+        from .models import Item
+
+        # Register your models here.
+        admin.site.register(Item)
+
+28. *go to the website app under the **/admin** we just created and add some items under TODO list.*
