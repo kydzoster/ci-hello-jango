@@ -117,6 +117,7 @@
 31. *duplicate todo_list.html and rename it to add_item.html, then change Heading and replace table with:*
 
         <form method="POST" action="add">
+            {% csrf_token %}
             <div>
                 <p>
                     <label for="id_name">Name:</label>
@@ -138,7 +139,14 @@
 
 32. *inside todo/views.py add:*
 
+        # when someone preses add_item if its a get request it will return add_item template
         def add_item(request):
+            # if its a POST it will generate template to add a new item
+            if request.method == 'POST':
+                name = request.POST.get('item_name')
+                done = 'done' in request.POST
+                Item.objects.create(name=name, done=done)
+                return redirect('get_todo_list')
             return render(request, 'todo/add_item.html')
 
 33. *inside django_todo/urls.py add in import **add_item** and inside urlpatterns add:*
