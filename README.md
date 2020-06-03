@@ -237,3 +237,51 @@
 40. *inside urls.py update todo.views import by adding edit_item and inside urlpatterns add new path:*
 
         path('edit/<item_id>', edit_item, name='edit')
+
+41. *inside todo_list.html under {% endif %} add two new codes:*
+
+        <td>
+            <a href="/toggle/{{ item.id }}">
+            <button>Toggle</button>
+            </a>
+        </td>
+
+        <td>
+            <a href="/delete/{{ item.id }}">
+            <button>Delete</button>
+            </a>
+        </td>
+
+42. *inside urls.py, because it is getting crowded we implement a django built in **views** and replace all content with and add two new paths:*
+
+        from django.contrib import admin
+        from django.urls import path
+        from todo import views
+
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('', views.get_todo_list, name='get_todo_list'),
+            path('add', views.add_item, name='add'),
+            path('edit/<item_id>', views.edit_item, name='edit'),
+            path('toggle/<item_id>', views.toggle_item, name='toggle'),
+            path('delete/<item_id>', views.delete_item, name='delete')
+        ]
+
+43. *inside views.py add 2 new requests:*
+
+        def toggle_item(request, item_id):
+            # this will get an instance with the item_id or 404 if page has
+            # not found when user hits the toggle button
+            item = get_object_or_404(Item, id=item_id)
+            # if the item is done it will change it to not done and vice versa
+            item.done = not item.done
+            item.save()
+            return redirect('get_todo_list')
+
+
+        def delete_item(request, item_id):
+            # this will get an instance with the item_id or 404 if page has
+            # not found when user hits the toggle button
+            item = get_object_or_404(Item, id=item_id)
+            item.delete()
+            return redirect('get_todo_list')
