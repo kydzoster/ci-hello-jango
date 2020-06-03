@@ -101,10 +101,47 @@
         <table>
             {% for item in items %}
                 <tr>
+                {% if item.done %}
+                    <td><strike>{{ item.name }}</strike></td>
+                {% else %}
                     <td>{{ item.name }}</td>
-                    <td>{{ item.done }}</td>
+                {% endif %}
                 </tr>
+            <!--if the task item list is empty it will promt this line of code-->
+            {% empty %}
+                <tr><td>There are no Tasks in your TODO app!</td></tr>
             {% endfor %}
         </table>
+        <a href="/add">Add an item</a>
 
-31. 
+31. *duplicate todo_list.html and rename it to add_item.html, then change Heading and replace table with:*
+
+        <form method="POST" action="add">
+            <div>
+                <p>
+                    <label for="id_name">Name:</label>
+                    <input type="text" name="item_name" id="id_name">
+                </p>
+            </div>
+            <div>
+                <p>
+                    <label for="id_done">Done:</label>
+                    <input type="checkbox" name="done" id="id_done">
+                </p>
+            </div>
+            <div>
+                <p>
+                    <button type="submit">Add Item</button>
+                </p>
+            </div>
+        </form>
+
+32. *inside todo/views.py add:*
+
+        def add_item(request):
+            return render(request, 'todo/add_item.html')
+
+33. *inside django_todo/urls.py add in import **add_item** and inside urlpatterns add:*
+
+        path('add', add_item, name='add')
+
