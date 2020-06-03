@@ -285,3 +285,21 @@
             item = get_object_or_404(Item, id=item_id)
             item.delete()
             return redirect('get_todo_list')
+
+44. *Added 3 test files*
+45. **pip3 install coverage** *- this will show how much code we have actually tested*
+46. *run coverage* - **coverage run --source=todo manage.py test**
+47. *to view the report* - **coverage report**
+48. *to see specifics on what we have missed, we can view it in an interactive HTML report.* - **coverage html**
+49. *to view this report seperate from django server type -* **python3 -m http.server** *open link and click on **htmlcov/** link*
+50. *when clicked on todo/models.py we see that it is missing a test for string method, lets add it:*
+
+    inside test_models.py add:
+
+        def test_item_string_method_returns_name(self):
+        item = Item.objects.create(name='Test TODO item')
+        self.assertEqual(str(item), 'Test TODO item')
+
+51. *run coverage once again - **coverage run --source=todo manage.py test** and view the report - **coverage report** - generate HTML report **coverage html***
+52. *Test coverage shows that we have covered 97% the missing percantage is django code itself*
+53. 
