@@ -80,3 +80,31 @@
         admin.site.register(Item)
 
 28. *go to the website app under the **/admin** we just created and add some items under TODO list.*
+29. *inside todo/views.py add:*
+
+        from django.shortcuts import render
+        from .models import Item
+
+        # Create your views here.
+
+
+        def get_todo_list(request):
+            items = Item.objects.all()
+            context = {
+                'items': items
+            }
+            return render(request, 'todo/todo_list.html', context)
+
+30. *inside todo/templates/todo/todo_list.html add:*
+
+        <h1>Things I need to do:</h1>
+        <table>
+            {% for item in items %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.done }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+31. 
