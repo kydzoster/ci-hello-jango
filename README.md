@@ -194,3 +194,46 @@
                 </p>
             </div>
         </form>
+
+37. *inside todo_list.html after {% endif %} add:*
+
+        <td>
+            <a href="/edit/{{ item.id }}">
+            <button>Edit</button>
+            </a>
+        </td>
+
+38. *inside views.py add get_object_or_404 to **django.shortcuts import** and add a new request:*
+
+        def edit_item(request, item_id):
+            # this will get an instance with the item_id or 404 if page has not found
+            item = get_object_or_404(Item, id=item_id)
+            # if its a POST it will generate template to update an old post
+            if request.method == 'POST':
+                form = ItemForm(request.POST, instance=item)
+                if form.is_valid():
+                    form.save()
+                    return redirect('get_todo_list')
+            form = ItemForm(instance=item)
+            context = {
+                'form': form
+            }
+            return render(request, 'todo/edit_item.html', context)
+
+39. *duplicate add_item and rename it to edit_item, then change content with:*
+
+        <h1>Edit a TODO item:</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <!--.as_p is a vertical styling, without it it will be a default horizontal styling-->
+            {{ form.as_p }}
+            <div>
+                <p>
+                    <button type="submit">Update Item</button>
+                </p>
+            </div>
+        </form>
+
+40. *inside urls.py update todo.views import by adding edit_item and inside urlpatterns add new path:*
+
+        path('edit/<item_id>', edit_item, name='edit')

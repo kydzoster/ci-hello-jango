@@ -10,11 +10,16 @@
     <table>
         {% for item in items %}
             <tr>
-            {% if item.done %}
-                <td><strike>{{ item.name }}</strike></td>
-            {% else %}
-                <td>{{ item.name }}</td>
-            {% endif %}
+                {% if item.done %}
+                    <td><strike>{{ item.name }}</strike></td>
+                {% else %}
+                    <td>{{ item.name }}</td>
+                {% endif %}
+                <td>
+                    <a href="/edit/{{ item.id }}">
+                    <button>Edit</button>
+                    </a>
+                </td>
             </tr>
         <!--if the task item list is empty it will promt this line of code-->
         {% empty %}
