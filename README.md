@@ -50,7 +50,7 @@
 
         urlpatterns = [
             path('admin/', admin.site.urls),
-            path('', get_todo_list, name='home')
+            path('', get_todo_list, name='get_todo_list')
         ]
 
 20. *inside **django_todo/settings.py** inside **INSTALLED_APPS** add **'todo',***
@@ -82,7 +82,7 @@
 28. *go to the website app under the **/admin** we just created and add some items under TODO list.*
 29. *inside todo/views.py add:*
 
-        from django.shortcuts import render
+        from django.shortcuts import render, redirect
         from .models import Item
 
         # Create your views here.
@@ -153,3 +153,44 @@
 
         path('add', add_item, name='add')
 
+34. *inside todo folder create a file forms.py and add:*
+
+        from django import forms
+        from .models import Item
+
+
+        class ItemForm(forms.ModelForm):
+            class Meta:
+                model = Item
+                fields = ['name', 'done']
+
+35. *inside todo/views.py add a new import form:*
+
+        from .forms import ItemForm
+
+    *and replace **def add_item(request):** code with:*
+
+        def add_item(request):
+            # if its a POST it will generate template to add a new item
+            if request.method == 'POST':
+                form = ItemForm(request.POST)
+                if form.is_valid():
+                    form.save()
+                    return redirect('get_todo_list')
+            form = ItemForm()
+            context = {
+                'form': form
+            }
+            return render(request, 'todo/add_item.html', context)
+
+36. *now, with the new form we can delete an old add_item form and instead render the form just like any other template variable:*
+
+        <form method="POST" action="add">
+            {% csrf_token %}
+            {{ form }}
+            <div>
+                <p>
+                    <button type="submit">Add Item</button>
+                </p>
+            </div>
+        </form>
