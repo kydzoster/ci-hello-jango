@@ -1,39 +1,31 @@
-<img src="https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png" style="margin: 0;">
+# Setup
 
-Welcome USER_NAME,
+1. **pip3 install django**
+2. **cd /workspace/.pip-modules/lib/python3.8/site-packages/**
+3. **ls -la** *- this will show django with all other files that came in with it, any packages that gets installed with pip3 will end up in this site-packages directory*
+4. **cd -** *- this will take you back to the main directory we are working from*
+5. **django-admin startproject django_todo .** *- this will create 2 instances **first** - django_todo folder with four .py files inside it and **second** - manage.py*
+6. **python3 manage.py runserver** *- this will run the server and will create 2 instances db.sqlite3 and pycache folder inside django_todo folder*
+7. **ctrl+c**
+8. **python3 manage.py startapp todo** *- this will create a todo folder for our todo application*
+9. *inside todo/views.py add:* 
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. You can safely delete this README.md file, or change it for your own project.
+        from django.shortcuts import render, HttpResponse
 
-## Gitpod Reminders
+        # Create your views here.
+        def say_hello(request):
+            return HttpResponse("Hello there!")
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+10. *inside django_todo/urls.py add:*
 
-`python3 -m http.server`
+        from django.contrib import admin
+        from django.urls import path
+        from todo.views import say_hello
 
-A blue button should appear to click: *Make Public*,
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('hello/', say_hello, name='hello')
+        ]
 
-Another blue button should appear to click: *Open Browser*.
-
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
-
-A blue button should appear to click: *Make Public*,
-
-Another blue button should appear to click: *Open Browser*.
-
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the backend lessons.
-
-## Updates Since The Instructional Video
-
-We continually tweak and adjust this template to help give you the best experience. Here are the updates since the original video was made:
-
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
-
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
-
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
-
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
-
---------
-
-Happy coding!
+11. **python3 manage.py runserver**
+12. *at the end of the address bar type **/hello/** to view our project*
