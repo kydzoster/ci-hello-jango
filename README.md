@@ -54,3 +54,14 @@
         ]
 
 20. *inside **django_todo/settings.py** inside **INSTALLED_APPS** add **'todo',***
+21. **python3 manage.py migrate** *- this will migrate necessary files for admin, authentications etc.*
+22. **python3 manage.py createsuperuser**
+
+        username: kydzoster
+        password: pass123
+
+23. *inside **todo/models.py** add new class:*
+
+        class Item(models.Model):
+            name = models.CharField(max_length=50, null=False, blank=False)
+            done = models.BooleanField(null=False, blank=False, default=False)
