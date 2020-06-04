@@ -334,9 +334,13 @@ these files will be ignored and wont be pushed to github, but because I forgot t
             'default': dj_database_url.parse('postgres://xryahtcmrlttzk:7bed1fdb8c7847ba5444617c96e21f2e8aa615f42ca1823223390cfc28a833e6@ec2-54-217-213-79.eu-west-1.compute.amazonaws.com:5432/d62f1l6uvvqjo8')
         }
 
-    and add import at the top of the settings.py under the **import os**:
+    then add import at the top of the settings.py under the **import os**:
 
         import dj_database_url
+
+    and finally add inside ALLOWED_HOSTS:
+
+        ALLOWED_HOSTS = ['kydzoster-django-todo-app.herokuapp.com']
 
 10. *run migrations **python3 manage.py migrate***
 11. **heroku config:set DISABLE_COLLECTSTATIC=1**
