@@ -1,5 +1,16 @@
 # Setup
 
+## gitignore
+
+*create a file **.gitignore*** and add these:
+
+        *.sqlite3
+        __pycache__/
+
+these files will be ignored and wont be pushed to github, but because I forgot to do this at the beggining of my **git add, commit and push** they will be found in my github repository.*
+
+<br>
+
 1. **pip3 install django**
 2. **cd /workspace/.pip-modules/lib/python3.8/site-packages/**
 3. **ls -la** *- this will show django with all other files that came in with it, any packages that gets installed with pip3 will end up in this site-packages directory*
@@ -329,12 +340,3 @@
 
 10. *run migrations **python3 manage.py migrate***
 
-# gitignore
-
-1. *create a file **.gitignore*** and add these:
-
-        *.sqlite3
-        __pycache__/
-    these files will be ignored and wont be pushed to github.
-
-2. 
