@@ -339,4 +339,10 @@ these files will be ignored and wont be pushed to github, but because I forgot t
         import dj_database_url
 
 10. *run migrations **python3 manage.py migrate***
+11. **heroku config:set DISABLE_COLLECTSTATIC=1**
+12. **touch Procfile** *-then add inside:
 
+        web: gunicorn django_todo.wsgi:application
+
+13. *git add, commit and push.*
+14. **git push heroku master** *- to push it to heroku*
