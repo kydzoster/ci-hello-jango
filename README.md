@@ -350,3 +350,23 @@ these files will be ignored and wont be pushed to github, but because I forgot t
 
 13. *git add, commit and push.*
 14. **git push heroku master** *- to push it to heroku*
+
+# Environ
+
+1. inside settings.py change these 3 codes:
+
+        SECRET_KEY = os.environ.get('SECRET_KEY', '#&nk0*49#fw342=q6zcw3w%e$jfi951hhif2abx_jp9i%8%h_q')
+
+        ALLOWED_HOSTS = [os.environ.get('HEROKU_HOSTNAME')]
+
+        DATABASES = {
+            'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+        }
+
+2. go to heroku and under settings hit reveal var, then add:
+
+        HEROKU_HOSTNAME         kydzoster-django-todo-app.herokuapp.com
+
+3. git add .
+4. git commit -m"message"
+5. git push
