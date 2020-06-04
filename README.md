@@ -370,3 +370,37 @@ these files will be ignored and wont be pushed to github, but because I forgot t
 3. git add .
 4. git commit -m"message"
 5. git push
+
+# Debugging
+
+1. inside settings.py under the imports add:
+
+        development = os.environ.get('DEVELOPMENT', False)
+
+    change DEBUG to:
+
+        DEBUG = development
+
+    change DATABASES to:
+
+        if development:
+            DATABASES = {
+                'default': {
+                    'ENGINE': 'django.db.backends.sqlite3',
+                    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+                }
+            }
+        else:
+            DATABASES = {
+                'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+            }
+
+2. from the main workspaces click on your logo button upper right and select **settings**, then **Add Variable** change name to DEVELOPMENT and set value to True
+3. in settings.py change ALLOWED_HOSTS to:
+
+        if development:
+            ALLOWED_HOSTS = ['localhost']
+        else:
+            ALLOWED_HOSTS = [os.environ.get('HEROKU_HOSTNAME')]
+
+4. python3 manage.py runserver
