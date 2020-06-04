@@ -286,13 +286,16 @@
             item.delete()
             return redirect('get_todo_list')
 
-44. *Added 3 test files*
-45. **pip3 install coverage** *- this will show how much code we have actually tested*
-46. *run coverage* - **coverage run --source=todo manage.py test**
-47. *to view the report* - **coverage report**
-48. *to see specifics on what we have missed, we can view it in an interactive HTML report.* - **coverage html**
-49. *to view this report seperate from django server type -* **python3 -m http.server** *open link and click on **htmlcov/** link*
-50. *when clicked on todo/models.py we see that it is missing a test for string method, lets add it:*
+
+# Testing
+
+1. *Added 3 test files*
+2. **pip3 install coverage** *- this will show how much code we have actually tested*
+3. *run coverage* - **coverage run --source=todo manage.py test**
+4. *to view the report* - **coverage report**
+5. *to see specifics on what we have missed, we can view it in an interactive HTML report.* - **coverage html**
+6. *to view this report seperate from django server type -* **python3 -m http.server** *open link and click on **htmlcov/** link*
+7. *when clicked on todo/models.py we see that it is missing a test for string method, lets add it:*
 
     inside test_models.py add:
 
@@ -300,6 +303,28 @@
         item = Item.objects.create(name='Test TODO item')
         self.assertEqual(str(item), 'Test TODO item')
 
-51. *run coverage once again - **coverage run --source=todo manage.py test** and view the report - **coverage report** - generate HTML report **coverage html***
-52. *Test coverage shows that we have covered 97% the missing percantage is django code itself*
-53. 
+8. *run coverage once again - **coverage run --source=todo manage.py test** and view the report - **coverage report** - generate HTML report **coverage html***
+9. *Test coverage shows that we have covered 97% the missing percantage is django code itself*
+
+
+# Deployment
+
+1. *installing postgress, due to db.sqlite3 will get wiped out once deployed on heroku*
+2. **pip3 install psycopg2-binary**
+3. **pip3 install gunicorn**
+4. **pip3 freeze --local > requirements.txt**
+5. **heroku apps:create kydzoster-django-todo-app --region eu**. **--region eu** will create it on eu server, without it it will create on the US servers.
+6. *on heroku website under the **kydzoster-django-todo-app** inside resources type **postgres** choose **heroku postgres**.*
+7. **pip3 install dj_database_url**
+8. **heroku config**
+9. *go to django_todo/settings.py and comment out the DATABASES and add this code under it:*
+
+        DATABASES = {
+            'default': dj_database_url.parse('postgres://xryahtcmrlttzk:7bed1fdb8c7847ba5444617c96e21f2e8aa615f42ca1823223390cfc28a833e6@ec2-54-217-213-79.eu-west-1.compute.amazonaws.com:5432/d62f1l6uvvqjo8')
+        }
+
+    and add import at the top of the settings.py under the **import os**:
+
+        import dj_database_url
+
+10. *run migrations **python3 manage.py migrate***
