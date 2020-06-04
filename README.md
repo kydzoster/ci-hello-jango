@@ -328,3 +328,13 @@
         import dj_database_url
 
 10. *run migrations **python3 manage.py migrate***
+
+# gitignore
+
+1. *create a file **.gitignore*** and add these:
+
+        *.sqlite3
+        __pycache__/
+    these files will be ignored and wont be pushed to github.
+
+2. 
