@@ -403,4 +403,9 @@ these files will be ignored and wont be pushed to github, but because I forgot t
         else:
             ALLOWED_HOSTS = [os.environ.get('HEROKU_HOSTNAME')]
 
-4. python3 manage.py runserver
+
+4. delete secret key code from settings.py, then go to https://miniwebtool.com/django-secret-key-generator/ and generate new Django secret key.
+5. then go to workspaces, click on logo upper right, select settings, then Add Variables and chante name to SECRET_KEY and change Value to Django secret key you generated from that website.
+6. generate another key and go to heroku settings > **Reveal config variables** create new SECRET_KEY and paste generate code into value
+6. stop workspace and start again.
+7. **python3 manage.py runserver**
